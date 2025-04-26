@@ -1,4 +1,5 @@
 import time
+import schedule
 from json import dumps # serialises Python dictionaries into JSON format
 
 from faker import Faker #helps generate random strings
@@ -16,5 +17,8 @@ def gen_data():
     producer.flush()
 
 if __name__ == "__main__":
-    time.sleep(5)
-    gen_data()
+    schedule.every(5).seconds.do(gen_data)
+
+    while(True):
+        schedule.run_pending()
+        time.sleep(0.5)

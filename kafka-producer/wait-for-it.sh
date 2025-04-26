@@ -1,6 +1,3 @@
-# script to wait for kafka to start
-# may be fixed by mentioning depends-on in docker-compose, however kafka may take a while to load in all topics and channels, etc. so this is a workaround
-
 #!/usr/bin/env bash
 #   Use this script to test if a given TCP host/port are available
 

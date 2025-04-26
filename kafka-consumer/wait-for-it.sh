@@ -1,6 +1,3 @@
-# script to wait for kafka to start
-# may be fixed by mentioning depends-on in docker-compose, however kafka may take a while to load in all topics and channels, etc. so this is a workaround
-
 #!/usr/bin/env bash
 #   Use this script to test if a given TCP host/port are available
 
@@ -35,13 +32,8 @@ wait_for()
     start_ts=$(date +%s)
     while :
     do
-        if [[ $ISBUSY -eq 1 ]]; then
-            nc -z $HOST $PORT
-            result=$?
-        else
-            (echo > /dev/tcp/$HOST/$PORT) >/dev/null 2>&1
-            result=$?
-        fi
+        nc -z $HOST $PORT
+        result=$?
         if [[ $result -eq 0 ]]; then
             end_ts=$(date +%s)
             echoerr "$cmdname: $HOST:$PORT is available after $((end_ts - start_ts)) seconds"
