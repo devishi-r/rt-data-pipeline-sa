@@ -16,14 +16,15 @@ DB_PORT = "5432"
 
 def fetch_data():
     try:
-        conn = psycopg2.connect(host = DB_HOST,
-                                name = DB_NAME,
-                                user = DB_USER,
-                                password = DB_PASSWORD,
-                                port = DB_PORT)
+        conn = psycopg2.connect(host=DB_HOST,
+                                dbname=DB_NAME,
+                                user=DB_USER,
+                                password=DB_PASSWORD,
+                                port=DB_PORT)
         curr = conn.cursor()
         curr.execute("SELECT * FROM sentences") 
         rows = curr.fetchall()
+        # conn.commit()
         curr.close()
         conn.close()
         return rows
@@ -49,9 +50,37 @@ def main():
                 st.write(row)
                 unique_id.add(id)
         else:
-            st.write("")
+            st.write("Error in fetching data from Postgres database")
         time.sleep(5)
                     
 
 if __name__ == "__main__":
     main()
+
+# import streamlit as st
+# import psycopg2
+
+# def fetch_data():
+#     conn = psycopg2.connect(
+#         host="postgres",
+#         port="5432",
+#         dbname="postgres",
+#         user="postgres",
+#         password="passw0rd"
+#     )
+#     cur = conn.cursor()
+#     cur.execute("SELECT * FROM sentences;")
+#     rows = cur.fetchall()
+#     conn.close()
+#     return rows
+
+# st.title("PostgreSQL Data Viewer")
+
+# if st.button("Load Data"):
+#     data = fetch_data()
+#     if data:
+#         st.write(data)
+#     else:
+#         st.write("Error in fetching data from Postgres database")
+# else:
+#     st.write("Click the button to load data.")
